@@ -1,3 +1,5 @@
+import 'package:http/http.dart' as http;
+import 'viewText.dart';
 import 'app.dart';
 import 'contectUs.dart';
 import 'package:flutter/material.dart';
@@ -33,6 +35,20 @@ class _test extends State<test>{
           },),
   ListTile(title: Text("visite project on github"),onTap: (){
     launch("https://github.com/mesteranas/"+App.appName);
+  },),
+  ListTile(title: Text("license"),onTap: ()async{
+    String result;
+    try{
+    http.Response r=await http.get(Uri.parse("https://raw.githubusercontent.com/mesteranas/" + App.appName + "/main/LICENSE"));
+    if ((r.statusCode==200)) {
+      result=r.body;
+    }else{
+      result="error";
+    }
+    }catch(error){
+      result="error";
+    }
+    Navigator.push(context, MaterialPageRoute(builder: (context)=>ViewText("license", result)));
   },),
   ListTile(title: Text("about"),onTap: (){
     showDialog(context: context, builder: (BuildContext context){
