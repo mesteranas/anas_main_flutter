@@ -1,3 +1,6 @@
+import 'package:flutter/widgets.dart';
+
+import 'language.dart';
 import 'package:http/http.dart' as http;
 import 'viewText.dart';
 import 'app.dart';
@@ -5,16 +8,22 @@ import 'contectUs.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-void main() {
-  runApp(const test());
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  Language lan=Language("ar");
+  await lan.initState();
+  var l=lan.translate;
+  runApp(test(lan: l));
 }
 class test extends StatefulWidget{
-  const test({Key?key}):super(key:key);
+  final lan;
+  const test({Key?key,required this.lan}):super(key:key);
   @override
-  State<test> createState()=>_test();
+  State<test> createState()=>_test(lan);
 }
 class _test extends State<test>{
-
+  var _;
+  _test(this._);
   @override
   Widget build(BuildContext context){
     return MaterialApp(
@@ -26,7 +35,7 @@ class _test extends State<test>{
         title: const Text(App.name),), 
         drawer: Drawer(
           child:ListView(children: [
-          DrawerHeader(child: Text("navigation menu")),
+          DrawerHeader(child: Text(this._("navigation menu"))),
           ListTile(title: Text("contect us"),onTap: (){
             Navigator.push(context, MaterialPageRoute(builder: (context)=>ContectUsDialog()));
           },),
