@@ -1,6 +1,7 @@
+
 import 'package:shared_preferences/shared_preferences.dart';
 class Handler{
-  Future <dynamic> get(String type,String key) async{
+  static Future <dynamic> get(String type,String key) async{
     final perfs=await SharedPreferences.getInstance();
     var result;
     if (type=="string") {
@@ -14,8 +15,7 @@ class Handler{
     }
     return result;
   }
-}
-  Future <void> set(String type,String key,dynamic value) async{
+  static Future <void> set(String type,String key,dynamic value) async{
     final perfs=await SharedPreferences.getInstance();
     if (type=="string") {
       await perfs.setString(key,value);
@@ -27,4 +27,5 @@ class Handler{
       await perfs.setDouble(key,value);
     }
 
+  }
 }

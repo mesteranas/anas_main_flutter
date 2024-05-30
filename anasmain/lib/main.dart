@@ -1,3 +1,4 @@
+import 'settings.dart';
 import 'package:flutter/widgets.dart';
 
 import 'language.dart';
@@ -13,20 +14,24 @@ void main() async{
   Language lan=Language();
   await lan.initState();
   var l=lan.translate;
-  runApp(test(lan: l));
+  String currentLang=await Language.getCurrentLanguage()??"en";
+  runApp(test(lan: l,currentLang: currentLang,));
 }
 class test extends StatefulWidget{
   final lan;
-  const test({Key?key,required this.lan}):super(key:key);
+  final currentLang;
+  const test({Key?key,required this.lan,this.currentLang}):super(key:key);
   @override
-  State<test> createState()=>_test(lan);
+  State<test> createState()=>_test(lan,currentLang);
 }
 class _test extends State<test>{
   var _;
-  _test(this._);
+  var currentLang;
+  _test(this._,this.currentLang);
   @override
   Widget build(BuildContext context){
     return MaterialApp(
+      locale: Locale(this.currentLang),
       title: App.name,
       themeMode: ThemeMode.system,
       home:Builder(builder:(context) 
@@ -36,6 +41,9 @@ class _test extends State<test>{
         drawer: Drawer(
           child:ListView(children: [
           DrawerHeader(child: Text(this._("navigation menu"))),
+          ListTile(title:Text(this._("settings")) ,onTap:(){
+            Navigator.push(context, MaterialPageRoute(builder: (context) =>SettingsDialog(this._) ));
+          } ,),
           ListTile(title: Text(this._("contect us")),onTap: (){
             Navigator.push(context, MaterialPageRoute(builder: (context)=>ContectUsDialog(this._)));
           },),

@@ -8,5 +8,8 @@
     "about":"مساعدة",
     "version: ":"الاصدار :",
     "developer:":"المطور:",
-    "description:":"الوصف:"
+    "description:":"الوصف:",
+    "settings":"الإعدادات",
+    "general settings":"الإعدادات العامة",
+    "language":"اللغة"
 }
