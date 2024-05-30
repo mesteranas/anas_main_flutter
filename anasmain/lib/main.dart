@@ -10,7 +10,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
-  Language lan=Language("ar");
+  Language lan=Language();
   await lan.initState();
   var l=lan.translate;
   runApp(test(lan: l));
@@ -36,41 +36,41 @@ class _test extends State<test>{
         drawer: Drawer(
           child:ListView(children: [
           DrawerHeader(child: Text(this._("navigation menu"))),
-          ListTile(title: Text("contect us"),onTap: (){
-            Navigator.push(context, MaterialPageRoute(builder: (context)=>ContectUsDialog()));
+          ListTile(title: Text(this._("contect us")),onTap: (){
+            Navigator.push(context, MaterialPageRoute(builder: (context)=>ContectUsDialog(this._)));
           },),
-          ListTile(title: Text("donate"),onTap: (){
+          ListTile(title: Text(this._("donate")),onTap: (){
             launch("https://www.paypal.me/AMohammed231");
           },),
-  ListTile(title: Text("visite project on github"),onTap: (){
+  ListTile(title: Text(this._("visite project on github")),onTap: (){
     launch("https://github.com/mesteranas/"+App.appName);
   },),
-  ListTile(title: Text("license"),onTap: ()async{
+  ListTile(title: Text(this._("license")),onTap: ()async{
     String result;
     try{
     http.Response r=await http.get(Uri.parse("https://raw.githubusercontent.com/mesteranas/" + App.appName + "/main/LICENSE"));
     if ((r.statusCode==200)) {
       result=r.body;
     }else{
-      result="error";
+      result=this._("error");
     }
     }catch(error){
-      result="error";
+      result=this._("error");
     }
-    Navigator.push(context, MaterialPageRoute(builder: (context)=>ViewText("license", result)));
+    Navigator.push(context, MaterialPageRoute(builder: (context)=>ViewText(this._("license"), result)));
   },),
-  ListTile(title: Text("about"),onTap: (){
+  ListTile(title: Text(this._("about")),onTap: (){
     showDialog(context: context, builder: (BuildContext context){
-      return AlertDialog(title: Text("about "+App.name),content:Center(child:Column(children: [
-        ListTile(title: Text("version: " + App.version.toString())),
-        ListTile(title:Text("developer: mesteranas")),
-        ListTile(title:Text("description:" + App.description))
+      return AlertDialog(title: Text(this._("about")+" "+App.name),content:Center(child:Column(children: [
+        ListTile(title: Text(this._("version: ") + App.version.toString())),
+        ListTile(title:Text(this._("developer:")+" mesteranas")),
+        ListTile(title:Text(this._("description:") + App.description))
       ],) ,));
     });
   },)
         ],) ,),
         body:Container(alignment: Alignment.center
-        ,child: Column(children: [const  Text("this app is created by mesteranas")
+        ,child: Column(children: [
     ])),)));
   }
 }

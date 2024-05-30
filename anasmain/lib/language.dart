@@ -1,12 +1,14 @@
+import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'package:flutter/services.dart' show rootBundle;
 class Language {
-  String languageCode;
+  var languageCode;
   var content;
+  var supportedLanguages={"english":"en","arabic":"ar"};
 
-  Language(this.languageCode);
 
   Future<void> initState() async {
+    await getCurrentLanguage();
     await updateContent();
   }
   Future <void> updateContent() async{
@@ -25,4 +27,10 @@ class Language {
       return text;
     }
   }
+  Future <String> getCurrentLanguage() async{
+    final berfs=await SharedPreferences.getInstance();
+    languageCode=berfs.getString("language")??"en";
+    return languageCode;
+  }
+
 }
