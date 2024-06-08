@@ -3,26 +3,25 @@ import 'dart:convert';
 import 'package:flutter/services.dart' show rootBundle;
 class Language {
   static var languageCode;
-  var content;
+  static Map<String,dynamic> labels={};
   static var supportedLanguages={"english":"en","arabic":"ar"};
 
 
-  Future<void> initState() async {
+  static Future<void> runTranslation() async {
+    labels={};
     await getCurrentLanguage();
-    await updateContent();
-  }
-  Future <void> updateContent() async{
-        try {
-      final data = await rootBundle.loadString('assets/i18n/$languageCode.json');
-      content = jsonDecode(data);
+    try {
+      var data = await rootBundle.loadString('assets/i18n/$languageCode.json');
+      labels= jsonDecode(data);
     } catch (error) {
       print("Error loading language file: $error");
-      content = {};
-    }
+      labels= {};
+
   }
-  String translate(String text){
+  }
+  static String translate(String text){
     try{
-      return content[text];
+      return labels[text];
     } catch(error){
       return text;
     }

@@ -42,6 +42,7 @@ class _Settings extends State<SettingsDialog>{
             } ).toList()
             , onChanged: (value) async{
     await Handler.set("string","language",value);
+    Language.runTranslation();
     setState(() {
       currentLanguage=value??"en";
     });
